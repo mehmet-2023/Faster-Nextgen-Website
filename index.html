@@ -3,289 +3,254 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thunderstorm Cyberpunk Animation</title>
-  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <title>Faster App</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.7/babel.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-  <style>
-    body { margin: 0; overflow: hidden }
-    #root { width: 100vw; height: 100vh; position: relative }
-
-    .neon-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Orbitron', sans-serif; font-size: 5rem; font-weight: 700; opacity: 0; pointer-events: none; z-index: 10 }
-    .neon-text.meet   { color: #ff004d; text-shadow: 0 0 5px #ff004d, 0 0 10px #ff004d, 0 0 20px #ff004d, 0 0 30px #ff004d }
-    .neon-text.with   { color: #00ff00; text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00 }
-    .neon-text.faster { color: #FFD15D; text-shadow: 0 0 5px #FFD15D, 0 0 10px #FFD15D, 0 0 20px #FFD15D, 0 0 30px #FFD15D }
-    .neon-text.active { animation: neon-flicker 1.2s ease-in-out }
-    .neon-text.faster.permanent { opacity: 1 !important; animation: heartbeat-pulse 2s ease-in-out infinite }
-
-    .scroll-info {position: absolute;bottom: 60px;width: 100%;text-align: center;font-size: 14px;color: white;opacity: 0;animation: fadeIn 1s ease-in-out forwards, heartbeat 1.5s infinite;animation-delay: 5s, 5s;text-shadow: 0 0 5px #fff, 0 0 10px #fff;}
-
-    @keyframes fadeIn {to { opacity: 1; }}
-
-    @keyframes neon-flicker { 0% { opacity: 0 } 10% { opacity: 0.7 } 12% { opacity: 0.4 } 15% { opacity: 0.9 } 50% { opacity: 1 } 85% { opacity: 0.9 } 87% { opacity: 0.5 } 90% { opacity: 1 } 100% { opacity: 0 } }
-
-    @keyframes heartbeat-pulse {
-      0% { opacity: 1; text-shadow: 0 0 5px #FFD15D, 0 0 10px #FFD15D, 0 0 20px #FFD15D, 0 0 30px #FFD15D }
-      40% { opacity: 0.7; text-shadow: 0 0 3px #FFD15D, 0 0 7px #FFD15D, 0 0 15px #FFD15D, 0 0 20px #FFD15D }
-      50% { opacity: 0.85; text-shadow: 0 0 4px #FFD15D, 0 0 8px #FFD15D, 0 0 17px #FFD15D, 0 0 25px #FFD15D }
-      60% { opacity: 0.7; text-shadow: 0 0 3px #FFD15D, 0 0 7px #FFD15D, 0 0 15px #FFD15D, 0 0 20px #FFD15D }
-      100% { opacity: 1; text-shadow: 0 0 5px #FFD15D, 0 0 10px #FFD15D, 0 0 20px #FFD15D, 0 0 30px #FFD15D }
-    }
-
-    .scroll-button { position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; font-size: 2.5rem; color: white; display: flex; align-items: center; justify-content: center; z-index: 10 }
-
-    #flashOverlay { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff; opacity: 0; pointer-events: none; z-index: 9; transition: opacity 0.2s ease-in-out }
-  </style>
+  <link rel="icon" type="image/x-icon" href="https://cdn.glitch.global/aed1e798-d668-4241-a8a1-4aeb8554c7c2/icon.png?v=1717840429403">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="styles/styles.css" rel="stylesheet">
 </head>
 <body>
   <div id="root"></div>
+  <div id="second-section">
+    <div class="intro-cyberpunk">
+      <h1 class="section-title-cyber">Faster - How Fast Are You?</h1>
+      <p class="section-content-cyber">
+        Dive into the dance of <span class="glitch-text">colors</span>! Train your reflexes & rise above the ordinary.
+      </p>
+      <div class="button-group-cyber">
+        <button class="btn-cyber btn-yellow">Download APK</button>
+        <button class="btn-cyber btn-green">Play Store</button>
+        <a href="demo.html" target="_blank"><button class="btn-cyber btn-red">Try Faster Online</button></a>
+      </div>
+    </div>    
+  </div>
   <script type="text/babel">
-    const { useEffect, useRef, useState } = React
-    const { createRoot } = ReactDOM
+    const { useEffect, useRef, useState } = React;
+    const { createRoot } = ReactDOM;
 
     const ThunderstormBackground = () => {
-      const mountRef = useRef(null)
+      const mountRef = useRef(null);
       useEffect(() => {
-        const scene = new THREE.Scene()
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000)
-        const renderer = new THREE.WebGLRenderer({ antialias: true })
-        renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight)
-        renderer.setClearColor(0x1a1a1a)
-        mountRef.current.appendChild(renderer.domElement)
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x1a1a1a);
+        mountRef.current.appendChild(renderer.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0x1c2526, 0.3)
-        scene.add(ambientLight)
-        const lightningLight = new THREE.PointLight(0xffffff, 0, 1000)
-        lightningLight.position.set(0, 300, 200)
-        scene.add(lightningLight)
-        const secondaryLightning = new THREE.PointLight(0xccccff, 0, 800)
-        secondaryLightning.position.set(200, 250, -100)
-        scene.add(secondaryLightning)
+        const ambientLight = new THREE.AmbientLight(0x1c2526, 0.5);
+        scene.add(ambientLight);
+        const lightningLight = new THREE.PointLight(0xffffff, 0, 500);
+        lightningLight.position.set(0, 200, 100);
+        scene.add(lightningLight);
 
-        scene.fog = new THREE.FogExp2(0x1a1a1a, 0.002)
+        scene.fog = new THREE.FogExp2(0x1a1a1a, 0.001);
 
-        // Bulutlar
-        const cloudCanvas = document.createElement('canvas')
-        cloudCanvas.width = 64
-        cloudCanvas.height = 64
-        const cloudCtx = cloudCanvas.getContext('2d')
-        const cloudGradient = cloudCtx.createRadialGradient(32, 32, 0, 32, 32, 32)
-        cloudGradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)')
-        cloudGradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
-        cloudCtx.fillStyle = cloudGradient
-        cloudCtx.beginPath()
-        const circleCount = Math.floor(Math.random() * 3) + 6
-        for (let i = 0; i < circleCount; i++) {
-          const offsetX = (Math.random() - 0.5) * 12
-          const offsetY = (Math.random() - 0.5) * 12
-          const radius = Math.random() * 12 + 8
-          cloudCtx.arc(32 + offsetX, 32 + offsetY, radius, 0, Math.PI * 2)
-        }
-        cloudCtx.fill()
-        const cloudTexture = new THREE.CanvasTexture(cloudCanvas)
-        const cloudMaterial = new THREE.SpriteMaterial({ map: cloudTexture, transparent: true, opacity: 0.4 })
-        const clouds = []
-        for (let i = 0; i < 15; i++) {
-          const cloud = new THREE.Sprite(cloudMaterial)
-          const scale = Math.random() * 100 + 50
-          cloud.scale.set(scale, scale * 0.6, 1)
-          cloud.position.set(Math.random() * 1200 - 600, Math.random() * 300 + 100, Math.random() * 1200 - 600)
-          cloud.material.opacity = Math.random() * 0.25 + 0.15
-          clouds.push(cloud)
-          scene.add(cloud)
+        // Clouds
+        const cloudCanvas = document.createElement('canvas');
+        cloudCanvas.width = 32;
+        cloudCanvas.height = 32;
+        const cloudCtx = cloudCanvas.getContext('2d');
+        const cloudGradient = cloudCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        cloudGradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
+        cloudGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        cloudCtx.fillStyle = cloudGradient;
+        cloudCtx.beginPath();
+        cloudCtx.arc(16, 16, 16, 0, Math.PI * 2);
+        cloudCtx.fill();
+        const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
+        const cloudMaterial = new THREE.SpriteMaterial({ map: cloudTexture, transparent: true, opacity: 0.4 });
+        const clouds = [];
+        for (let i = 0; i < 8; i++) {
+          const cloud = new THREE.Sprite(cloudMaterial);
+          const scale = Math.random() * 50 + 25;
+          cloud.scale.set(scale, scale * 0.6, 1);
+          cloud.position.set(Math.random() * 800 - 400, Math.random() * 200 + 50, Math.random() * 800 - 400);
+          clouds.push(cloud);
+          scene.add(cloud);
         }
 
-        // Neonsmok
-        const smokeCanvas = document.createElement('canvas')
-        smokeCanvas.width = 128
-        smokeCanvas.height = 128
-        const smokeCtx = smokeCanvas.getContext('2d')
-        const smokeGradient = smokeCtx.createRadialGradient(64, 64, 0, 64, 64, 64)
-        smokeGradient.addColorStop(0, 'rgba(100, 50, 255, 0.3)')
-        smokeGradient.addColorStop(0.5, 'rgba(50, 100, 255, 0.2)')
-        smokeGradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
-        smokeCtx.fillStyle = smokeGradient
-        smokeCtx.fillRect(0, 0, 128, 128)
-        const smokeTexture = new THREE.CanvasTexture(smokeCanvas)
-        const smokeMaterial = new THREE.SpriteMaterial({ map: smokeTexture, transparent: true, opacity: 0.2 })
-        const smokes = []
-        for (let i = 0; i < 10; i++) {
-          const smoke = new THREE.Sprite(smokeMaterial)
-          const scale = Math.random() * 200 + 100
-          smoke.scale.set(scale, scale, 1)
-          smoke.position.set(Math.random() * 1200 - 600, Math.random() * 200 + 50, Math.random() * 1200 - 600)
-          smoke.material.opacity = Math.random() * 0.15 + 0.05
-          smokes.push(smoke)
-          scene.add(smoke)
-        }
+        // Moon
+        const moonCanvas = document.createElement('canvas');
+        moonCanvas.width = 32;
+        moonCanvas.height = 32;
+        const moonCtx = moonCanvas.getContext('2d');
+        const moonGradient = moonCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        moonGradient.addColorStop(0, 'rgba(220, 220, 255, 1)');
+        moonGradient.addColorStop(1, 'rgba(100, 100, 255, 0)');
+        moonCtx.fillStyle = moonGradient;
+        moonCtx.beginPath();
+        moonCtx.arc(16, 16, 14, 0, Math.PI * 2);
+        moonCtx.fill();
+        const moonTexture = new THREE.CanvasTexture(moonCanvas);
+        const moonMaterial = new THREE.SpriteMaterial({ map: moonTexture, transparent: true });
+        const moon = new THREE.Sprite(moonMaterial);
+        moon.scale.set(40, 40, 1);
+        moon.position.set(-200, 150, -300);
+        scene.add(moon);
 
-        // Ay
-        const moonCanvas = document.createElement('canvas')
-        moonCanvas.width = 64
-        moonCanvas.height = 64
-        const moonCtx = moonCanvas.getContext('2d')
-        const moonGradient = moonCtx.createRadialGradient(32, 32, 0, 32, 32, 32)
-        moonGradient.addColorStop(0, 'rgba(220, 220, 255, 1)')
-        moonGradient.addColorStop(0.8, 'rgba(180, 180, 255, 0.8)')
-        moonGradient.addColorStop(1, 'rgba(100, 100, 255, 0)')
-        moonCtx.fillStyle = moonGradient
-        moonCtx.beginPath()
-        moonCtx.arc(32, 32, 28, 0, Math.PI * 2)
-        moonCtx.fill()
-        const moonTexture = new THREE.CanvasTexture(moonCanvas)
-        const moonMaterial = new THREE.SpriteMaterial({ map: moonTexture, transparent: true })
-        const moon = new THREE.Sprite(moonMaterial)
-        moon.scale.set(80, 80, 1)
-        moon.position.set(-300, 250, -400)
-        scene.add(moon)
-
-        // Yağmur
-        const rainCount = 8000
-        const rainGeometry = new THREE.BufferGeometry()
-        const rainPositions = new Float32Array(rainCount * 6)
+        // Rain
+        const rainCount = 2000;
+        const rainGeometry = new THREE.BufferGeometry();
+        const rainPositions = new Float32Array(rainCount * 6);
         for (let i = 0; i < rainCount; i++) {
-          const x = Math.random() * 1200 - 600
-          const y = Math.random() * 600 + 100
-          const z = Math.random() * 1200 - 600
-          rainPositions[i*6]   = x
-          rainPositions[i*6+1] = y
-          rainPositions[i*6+2] = z
-          rainPositions[i*6+3] = x
-          rainPositions[i*6+4] = y-4
-          rainPositions[i*6+5] = z
+          const x = Math.random() * 800 - 400;
+          const y = Math.random() * 400 + 50;
+          const z = Math.random() * 800 - 400;
+          rainPositions[i * 6] = x;
+          rainPositions[i * 6 + 1] = y;
+          rainPositions[i * 6 + 2] = z;
+          rainPositions[i * 6 + 3] = x;
+          rainPositions[i * 6 + 4] = y - 2;
+          rainPositions[i * 6 + 5] = z;
         }
-        rainGeometry.setAttribute('position', new THREE.BufferAttribute(rainPositions, 3))
-        const rainMaterial = new THREE.LineBasicMaterial({ color: 0x99aabb, transparent: true, opacity: 0.4 })
-        const rain = new THREE.LineSegments(rainGeometry, rainMaterial)
-        scene.add(rain)
+        rainGeometry.setAttribute('position', new THREE.BufferAttribute(rainPositions, 3));
+        const rainMaterial = new THREE.LineBasicMaterial({ color: 0x99aabb, transparent: true, opacity: 0.3 });
+        const rain = new THREE.LineSegments(rainGeometry, rainMaterial);
+        scene.add(rain);
 
-        camera.position.set(0, 200, 600)
-        camera.lookAt(0, 200, 0)
+        camera.position.set(0, 100, 400);
+        camera.lookAt(0, 100, 0);
 
-        let nextLightning = Date.now() + Math.random()*1700+800
-        const bolts = []
+        let nextLightning = Date.now() + Math.random() * 1500 + 500;
+        const bolts = [];
 
         function triggerLightning() {
-          const major = Math.random()<0.75
-          const intensity = major?Math.random()*120+120:Math.random()*60+40
-          const duration = major?Math.random()*400+150:Math.random()*200+50
-          lightningLight.intensity = intensity
-          secondaryLightning.intensity = intensity*0.5
-          moon.material.opacity = major?0.5:0.8
-          const count = major?Math.floor(Math.random()*4)+1:1
-          for (let i=0;i<count;i++) {
-            const geom = new THREE.BufferGeometry()
-            const startX = Math.random()*240-120
-            const startZ = Math.random()*240-120
-            const points = [ new THREE.Vector3(startX,300,startZ) ]
-            for (let j=1;j<=20;j++){
-              const t=j/20
-              points.push(new THREE.Vector3(
-                startX+(Math.random()-0.5)*100,
-                300-t*250,
-                startZ+(Math.random()-0.5)*100
-              ))
-            }
-            geom.setFromPoints(points)
-            const mat = new THREE.LineBasicMaterial({ color:0xe6e6ff, transparent:true, opacity:1, linewidth:4 })
-            const bolt = new THREE.Line(geom, mat)
-            scene.add(bolt)
-            bolts.push({ bolt, fade:Date.now()+duration*0.9 })
+          const intensity = Math.random() * 80 + 40;
+          const duration = Math.random() * 200 + 100;
+          lightningLight.intensity = intensity;
+          moon.material.opacity = 0.7;
+          const geom = new THREE.BufferGeometry();
+          const startX = Math.random() * 160 - 80;
+          const startZ = Math.random() * 160 - 80;
+          const points = [new THREE.Vector3(startX, 200, startZ)];
+          for (let j = 1; j <= 10; j++) {
+            const t = j / 10;
+            points.push(new THREE.Vector3(
+              startX + (Math.random() - 0.5) * 50,
+              200 - t * 150,
+              startZ + (Math.random() - 0.5) * 50
+            ));
           }
-          setTimeout(()=>{
-            lightningLight.intensity=0
-            secondaryLightning.intensity=0
-            moon.material.opacity=1
-          }, duration)
+          geom.setFromPoints(points);
+          const mat = new THREE.LineBasicMaterial({ color: 0xe6e6ff, transparent: true, opacity: 1, linewidth: 2 });
+          const bolt = new THREE.Line(geom, mat);
+          scene.add(bolt);
+          bolts.push({ bolt, fade: Date.now() + duration });
+          setTimeout(() => {
+            lightningLight.intensity = 0;
+            moon.material.opacity = 1;
+          }, duration);
         }
 
         function animate() {
-          requestAnimationFrame(animate)
-          camera.position.z -= 0.5
-          camera.lookAt(0,200,camera.position.z-100)
-          clouds.forEach(c=>{ c.position.x+=0.2; if(c.position.x>600){ c.position.x=-600; c.position.z=Math.random()*1200-600 } })
-          smokes.forEach(s=>{ s.position.x+=0.1; if(s.position.x>600){ s.position.x=-600; s.position.z=Math.random()*1200-600 } })
-          for (let i=0;i<rainCount;i++){
-            rainPositions[i*6+1]-=15*0.01
-            rainPositions[i*6+4]-=15*0.01
-            if(rainPositions[i*6+1]<100){ rainPositions[i*6+1]=600; rainPositions[i*6+4]=596 }
+          requestAnimationFrame(animate);
+          camera.position.z -= 0.3;
+          camera.lookAt(0, 100, camera.position.z - 50);
+          clouds.forEach(c => {
+            c.position.x += 0.1;
+            if (c.position.x > 400) c.position.x = -400;
+          });
+          for (let i = 0; i < rainCount; i++) {
+            rainPositions[i * 6 + 1] -= 10 * 0.01;
+            rainPositions[i * 6 + 4] -= 10 * 0.01;
+            if (rainPositions[i * 6 + 1] < 50) {
+              rainPositions[i * 6 + 1] = 400;
+              rainPositions[i * 6 + 4] = 398;
+            }
           }
-          rainGeometry.attributes.position.needsUpdate=true
-          bolts.forEach((b,i)=>{ if(Date.now()>b.fade){ b.bolt.material.opacity-=0.02; if(b.bolt.material.opacity<=0){ scene.remove(b.bolt); bolts.splice(i,1) } } })
-          if(Date.now()>nextLightning){ triggerLightning(); nextLightning=Date.now()+Math.random()*1700+800 }
-          renderer.render(scene,camera)
+          rainGeometry.attributes.position.needsUpdate = true;
+          bolts.forEach((b, i) => {
+            if (Date.now() > b.fade) {
+              b.bolt.material.opacity -= 0.05;
+              if (b.bolt.material.opacity <= 0) {
+                scene.remove(b.bolt);
+                bolts.splice(i, 1);
+              }
+            }
+          });
+          if (Date.now() > nextLightning) {
+            triggerLightning();
+            nextLightning = Date.now() + Math.random() * 1500 + 500;
+          }
+          renderer.render(scene, camera);
         }
-        animate()
+        animate();
 
-        window.addEventListener('resize',()=>{
-          renderer.setSize(innerWidth, innerHeight)
-          camera.aspect = innerWidth/innerHeight
-          camera.updateProjectionMatrix()
-        })
-      }, [])
-      return <div ref={mountRef} style={{ position:'absolute', top:0, left:0, width:'100vw', height:'100vh' }} />
-    }
+        let resizeTimeout;
+        const handleResize = () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+          }, 100);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+      return <div ref={mountRef} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh' }} />;
+    };
 
     const App = () => {
-      const [activeText, setActiveText] = useState(null)
-      const [showButton, setShowButton] = useState(false)
-      const [firedFaster, setFiredFaster] = useState(false)
-      const [showScrollInfo, setShowScrollInfo] = useState(false)
+      const [activeText, setActiveText] = useState(null);
+      const [showButton, setShowButton] = useState(false);
+      const [showScrollInfo, setShowScrollInfo] = useState(false);
 
-      useEffect(()=>{
-      if(firedFaster) {
-      const timeout = setTimeout(()=>setShowScrollInfo(true), 2000)
-      return () => clearTimeout(timeout)
-      }
-      }, [firedFaster])
+      useEffect(() => {
+        if (activeText === 'Faster') {
+          const timeout = setTimeout(() => setShowScrollInfo(true), 2000);
+          document.getElementById('second-section').classList.add('visible');
+          return () => clearTimeout(timeout);
+        }
+      }, [activeText]);
 
       useEffect(() => {
         const seq = [
-          { text:'Meet',   start:1000, duration:1200 },
-          { text:'With',   start:2500, duration:1200 },
-          { text:'Faster', start:4000, duration:1200 }
-        ]
+          { text: 'Meet', start: 1000, duration: 1000 },
+          { text: 'With', start: 2500, duration: 1000 },
+          { text: 'Faster', start: 4000, duration: 1000 }
+        ];
         const timers = seq.map(({ text, start, duration }) =>
-          setTimeout(()=>{
-            setActiveText(text)
-            if(text==='Faster'){
-              setShowButton(true)
-              setFiredFaster(true)
-              const flash = document.getElementById('flashOverlay')
-              flash.style.opacity = 1
-              setTimeout(()=>{ flash.style.opacity=0 }, 200)
+          setTimeout(() => {
+            setActiveText(text);
+            if (text === 'Faster') {
+              setShowButton(true);
+              const flash = document.getElementById('flashOverlay');
+              flash.style.opacity = 1;
+              setTimeout(() => flash.style.opacity = 0, 200);
             } else {
-              setTimeout(()=>setActiveText(null), duration)
+              setTimeout(() => setActiveText(null), duration);
             }
           }, start)
-        )
-        return ()=>timers.forEach(t=>clearTimeout(t))
-      }, [])
+        );
+        return () => timers.forEach(t => clearTimeout(t));
+      }, []);
 
       return (
-        <div style={{ position:'relative', width:'100vw', height:'100vh', overflow:'hidden' }}>
+        <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
           <ThunderstormBackground />
           <div id="flashOverlay"></div>
-          {['Meet','With','Faster'].map(text=>{
-            const isActive = activeText===text
-            let cls = `neon-text ${text.toLowerCase()} ${isActive?'active':''}`
-            if(text==='Faster' && firedFaster) cls += ' permanent'
-            return <div key={text} className={cls}>{text}</div>
+          {['Meet', 'With', 'Faster'].map(text => {
+            const isActive = activeText === text;
+            let cls = `neon-text ${text.toLowerCase()} ${isActive ? 'active' : ''}`;
+            if (text === 'Faster' && showButton) cls += ' permanent';
+            return <div key={text} className={cls}>{text}</div>;
           })}
           {showButton && (
-            <button className="scroll-button" onClick={()=>window.scrollTo({ top:document.body.scrollHeight, behavior:'smooth' })}>↓</button>
+            <button className="scroll-button" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>↓</button>
           )}
-          {showScrollInfo && (
-            <div className="scroll-info">Scroll down for the real fun</div>
-          )}
+          {showScrollInfo && <div className="scroll-info">Scroll down for the real fun</div>}
         </div>
-      )
-    }
+      );
+    };
 
-    const root = createRoot(document.getElementById('root'))
-    root.render(<App />)
+    const root = createRoot(document.getElementById('root'));
+    root.render(<App />);
   </script>
 </body>
 </html>
