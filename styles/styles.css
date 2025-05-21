@@ -656,12 +656,12 @@ a {
   color:var(--accent-green);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .section-title-cyber {
-    font-size: 2rem !important;
+    font-size: 1.5rem !important;
   }
   .section-content-cyber {
-    font-size: 1rem !important;
+    font-size: 0.7rem !important;
   }
 
   .how-to-play{
@@ -670,8 +670,8 @@ a {
   }
   .playcard{
     width:90vw;
-    height:15vh;
-    margin-bottom:2vh;
+    height:7rem;
+    margin-bottom:1rem;
   }
   .playcard h4{
     font-size:1rem;
