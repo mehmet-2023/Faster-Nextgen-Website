@@ -548,7 +548,7 @@ body {
 }
 
 .btn-cyber:hover {
-  box-shadow: -1px 1px 121px 3px currentColor;
+  box-shadow: -1px 1px 30px 3px currentColor;
 }
 
 a {
