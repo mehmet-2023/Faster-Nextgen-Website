@@ -458,6 +458,7 @@ body {
   color: white;
   font-family: "Orbitron", sans-serif;
   text-align: center;
+  overflow-x: hidden;
 }
 
 #second-section.visible {
