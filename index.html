@@ -12,15 +12,590 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="https://cdn.glitch.global/aed1e798-d668-4241-a8a1-4aeb8554c7c2/icon.png?v=1717840429403">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="styles/styles.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid #b3f0e0;
+      z-index: 1000;
+      padding: 15px 0;
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: #ffcc00;
+      text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+      text-decoration: none;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar-links a {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: #b0b8c0;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .navbar-links a:hover {
+      color: #b3f0e0;
+      text-shadow: 0 0 5px rgba(179, 240, 224, 0.5);
+    }
+
+    /* Section Styling */
+    section {
+      position: relative;
+      padding: 60px 20px;
+      background: linear-gradient(180deg, rgba(26, 26, 26, 0.95), rgba(10, 10, 10, 1));
+      z-index: 10;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-cyberpunk, .challenges-arena, .neon-network, .communication, .statistics, .behind-game, .beta, .cta {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      color: #b3f0e0;
+      text-shadow: 0 0 5px rgba(179, 240, 224, 0.5);
+      margin-bottom: 30px;
+    }
+
+    .section-content {
+      font-size: 1.2rem;
+      color: #b0b8c0;
+      margin-bottom: 40px;
+    }
+
+    .glitch-text {
+      color: #ffcc00;
+      position: relative;
+      animation: glitch 3s linear infinite;
+    }
+
+    .glitch-text:before,
+    .glitch-text:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-text:before {
+      color: #b3f0e0;
+      animation: glitch-top 1.5s linear infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    }
+
+    .glitch-text:after {
+      color: #ff4d7d;
+      animation: glitch-bottom 2s linear infinite;
+      clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    }
+
+    /* Playcards */
+    .how-to-play {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .playcard {
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .playcard-red {
+      border-color: #ff4d7d;
+      box-shadow: 0 0 10px rgba(255, 77, 125, 0.3);
+    }
+
+    .playcard-yellow {
+      border-color: #ffcc00;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    }
+
+    .playcard-green {
+      border-color: #b3f0e0;
+      box-shadow: 0 0 10px rgba(179, 240, 224, 0.3);
+    }
+
+    .playcard:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .playcard i {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: inherit;
+    }
+
+    .content-playcard h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      margin: 0 0 10px;
+      color: #e0e0e0;
+    }
+
+    .content-playcard p {
+      font-size: 0.95rem;
+      color: #b0b8c0;
+    }
+
+    .be-faster {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .faster {
+      color: #ffcc00;
+      text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+    }
+
+    /* Buttons */
+    .button-group-cyber {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-cyber {
+      padding: 12px 25px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+
+    .btn-yellow {
+      background: #ffcc00;
+      color: #0a0a0a;
+    }
+
+    .btn-green {
+      background: #b3f0e0;
+      color: #0a0a0a;
+    }
+
+    .btn-red {
+      background: #ff4d7d;
+      color: #fff;
+    }
+
+    .btn-cyber:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    /* Challenges Arena */
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .challenge-card {
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid #b3f0e0;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .challenge-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(179, 240, 224, 0.5);
+    }
+
+    .challenge-card h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #e0e0e0;
+      margin: 0 0 10px;
+    }
+
+    .challenge-card p {
+      font-size: 0.95rem;
+      color: #b0b8c0;
+    }
+
+    .challenge-card i {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #ffcc00;
+      animation: pulse 2s infinite;
+    }
+
+    /* Neon Network */
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .network-card {
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid #ff4d7d;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .network-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .network-card h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #e0e0e0;
+      margin: 0 0 10px;
+    }
+
+    .network-card p {
+      font-size: 0.95rem;
+      color: #b0b8c0;
+    }
+
+    /* Communication */
+    .communication-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .communication-card {
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid #ffcc00;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .communication-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .communication-card h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #e0e0e0;
+      margin: 0 0 10px;
+    }
+
+    .communication-card p {
+      font-size: 0.95rem;
+      color: #b0b8c0;
+    }
+
+    .communication-card i {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #b3f0e0;
+    }
+
+    /* Statistics */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid #b3f0e0;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-card h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #e0e0e0;
+      margin: 0 0 10px;
+    }
+
+    .stat-card p {
+      font-size: 1.2rem;
+      color: #ffcc00;
+      font-weight: 600;
+    }
+
+    .stat-card span {
+      font-size: 0.95rem;
+      color: #b0b8c0;
+    }
+
+    /* Behind the Game */
+    .behind-game-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Footer */
+    .footer {
+      background: rgba(10, 10, 10, 0.95);
+      border-top: 1px solid #b3f0e0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials a {
+      color: #b0b8c0;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .footer-socials a:hover {
+      color: #ffcc00;
+      text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+    }
+
+    .footer p {
+      font-size: 0.9rem;
+      color: #b0b8c0;
+      margin: 0 0 10px;
+    }
+
+    .footer .btn-cyber {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes glitch {
+      2%, 64% {
+        transform: translate(1px, 0);
+      }
+      4%, 60% {
+        transform: translate(-1px, 0);
+      }
+      62% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes glitch-top {
+      2%, 64% {
+        transform: translate(1px, -1px);
+      }
+      4%, 60% {
+        transform: translate(-1px, 1px);
+      }
+      62% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes glitch-bottom {
+      2%, 64% {
+        transform: translate(-1px, 1px);
+      }
+      4%, 60% {
+        transform: translate(1px, -1px);
+      }
+      62% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Background Grid */
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M0 0h40v1H0zm0 0v40h1V0z" fill="rgba(179,240,224,0.05)"/></svg>') repeat;
+      opacity: 0.1;
+      z-index: -1;
+      animation: grid-move 30s linear infinite;
+    }
+
+    @keyframes grid-move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 40px 40px;
+      }
+    }
+
+    /* Neon Text for First Section */
+    .neon-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      color: #e0e0e0;
+      text-shadow: 0 0 5px rgba(179, 240, 224, 0.5);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .neon-text.faster {
+      color: #ffcc00;
+      text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+    }
+
+    .neon-text.active {
+      opacity: 1;
+    }
+
+    .neon-text.permanent {
+      opacity: 1;
+    }
+
+    .scroll-button {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: none;
+      border: 1px solid #b3f0e0;
+      color: #b3f0e0;
+      font-size: 1.5rem;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .scroll-button:hover {
+      background: #b3f0e0;
+      color: #0a0a0a;
+      box-shadow: 0 0 10px #b3f0e0;
+    }
+
+    .scroll-info {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: #ffcc00;
+      text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    #flashOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 1000;
+    }
+  </style>
 </head>
 <body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="navbar-logo">Faster</a>
+      <div class="navbar-links">
+        <a href="#second-section">Home</a>
+        <a href="#challenges-arena-section">Challenges</a>
+        <a href="#communication-section">Contact Us</a>
+        <a href="#cta-section">Join Now</a>
+      </div>
+    </div>
+  </nav>
   <div id="root"></div>
-  <div id="second-section">
+  <section id="second-section">
     <div class="intro-cyberpunk">
-      <h1 class="section-title-cyber">Faster - How Fast Are You?</h1>
-      <p class="section-content-cyber">
-        Dive into a <span class="glitch-text">color storm</span>! Train your reflexes. Outplay the ordinary.
+      <h1 class="section-title">Faster - How Fast Are You?</h1>
+      <p class="section-content">
+        Dive into a <span class="glitch-text" data-text="color storm">color storm</span>! Train your reflexes. Outplay the ordinary.
       </p>
       <div class="how-to-play">
         <div class="playcard playcard-red">
@@ -46,236 +621,330 @@
         </div>
       </div>
       <div class="button-group-cyber">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSePiGnSiK2LD0W2n-W-0TBwGDd3dqCy_w6wk6YpIwxa9e823w/viewform?usp=header"><button class="btn-cyber btn-yellow">Google Play(Closed Test)</button></a>
-        <a href="https://drive.google.com/file/d/19tyuW3qyb8eycUwlWhyxXdbAZ2y5IMwA/view?usp=sharing"><button class="btn-cyber btn-green">Download APK(Turkish)</button></a>
-        <!-- <a onclick="alert('Very Soon :D')"><button class="btn-cyber btn-green">Play Store</button></a> -->
+        <a href="https://play.google.com/store/apps/details?id=com.agentapps.fastertr"><button class="btn-cyber btn-yellow">Google Play (Open Test)</button></a>
+        <a href="https://drive.google.com/file/d/19tyuW3qyb8eycUwlWhyxXdbAZ2y5IMwA/view?usp=sharing"><button class="btn-cyber btn-green">Download APK (Turkish)</button></a>
         <a href="demo.html" target="_blank"><button class="btn-cyber btn-red">Try Faster Online</button></a>
       </div>
-    </div>    
-  </div>
+    </div>
+  </section>
+  <section id="challenges-arena-section">
+    <div class="challenges-arena">
+      <h1 class="section-title">Challenges Arena</h1>
+      <p class="section-content">Face the ultimate tests of speed and precision in our electrifying challenges!</p>
+      <div class="challenges-grid">
+        <div class="challenge-card">
+          <i class="fa-solid fa-star"></i>
+          <h4>Daily Sprint</h4>
+          <p>Compete in daily challenges to climb the global leaderboard. New colors, new thrills every day!</p>
+        </div>
+        <div class="challenge-card">
+          <i class="fa-solid fa-stopwatch"></i>
+          <h4>Time Trials</h4>
+          <p>Push your limits with timed challenges that get faster with every victory.</p>
+        </div>
+        <div class="challenge-card">
+          <i class="fa-solid fa-globe"></i>
+          <h4>Global Clash</h4>
+          <p>Battle players worldwide in real-time matches to prove you're the fastest!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="communication-section">
+    <div class="communication">
+      <h1 class="section-title">Stay Connected</h1>
+      <p class="section-content">Communicate seamlessly with players worldwide and join the conversation!</p>
+      <div class="communication-grid">
+        <div class="communication-card">
+          <i class="fa-solid fa-comment"></i>
+          <h4>In-Game Chat</h4>
+          <p>Strategize and socialize with real-time chat during matches.</p>
+        </div>
+        <div class="communication-card">
+          <i class="fa-solid fa-people-group"></i>
+          <h4>Invite your friends</h4>
+          <p>Share your friendship code, challange them and find out who is <p class="faster">Faster</p></p>
+        </div>
+        <div class="communication-card">
+          <i class="fa-solid fa-share"></i>
+          <h4>Social Sharing</h4>
+          <p>Share your scores and highlights on Twitter, Instagram, and more.</p>
+        </div>
+      </div>
+      <div class="button-group-cyber">
+        <a href="mailto:agentgamesdevv@gmail.com" target="_blank"><button class="btn-cyber btn-green">Email Us</button></a>
+      </div>
+    </div>
+  </section>
+  <section id="statistics-section">
+    <div class="statistics">
+      <h1 class="section-title">Faster by the Numbers</h1>
+      <p class="section-content">Our community is growing, and the action is heating up!</p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h4>Active Users</h4>
+          <p>50+</p>
+          <span>Players worldwide mastering the color storm.</span>
+        </div>
+        <div class="stat-card">
+          <h4>In-Game Events</h4>
+          <p>0</p>
+          <span>Different game mode showcases, special day events.</span>
+        </div>
+        <div class="stat-card">
+          <h4>Online Matches</h4>
+          <p>150+</p>
+          <span>Increasing rapidly as players compete globally!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="behind-game-section">
+    <div class="behind-game">
+      <h1 class="section-title">Behind the Game</h1>
+      <p class="section-content">Inspired by the neon-drenched streets of a futuristic metropolis, Faster was crafted to push your reflexes to the limit. Our team at AgentApps designed this game to blend high-speed gameplay with a cyberpunk aesthetic, creating an immersive experience that keeps you coming back for more.</p>
+    </div>
+  </section>
+  <section id="cta-section">
+    <div class="cta">
+      <h1 class="section-title">Ready to Test Your Speed?</h1>
+      <p class="section-content">Join the color storm now and prove you’re the fastest!</p>
+      <div class="button-group-cyber">
+        <a href="https://play.google.com/store/apps/details?id=com.agentapps.fastertr"><button class="btn-cyber btn-yellow">Get on Google Play</button></a>
+        <a href="demo.html" target="_blank"><button class="btn-cyber btn-red">Play Now Online</button></a>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="footer-container">
+      <p>© 2025 AgentApps. All rights reserved.</p>
+      <button class="btn-cyber btn-green" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Back to Top</button>
+    </div>
+  </footer>
   <script type="text/babel">
-    const { useEffect, useRef, useState } = React;
-    const { createRoot } = ReactDOM;
+    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
+      console.error('React or ReactDOM is not loaded properly.');
+    } else {
+      const { useEffect, useRef, useState } = React;
+      const { createRoot } = ReactDOM;
 
-    const ThunderstormBackground = () => {
-      const mountRef = useRef(null);
-      useEffect(() => {
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: false });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0x1a1a1a);
-        mountRef.current.appendChild(renderer.domElement);
+      const ThunderstormBackground = () => {
+        const mountRef = useRef(null);
+        useEffect(() => {
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+          const renderer = new THREE.WebGLRenderer({ antialias: false });
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setClearColor(0x1a1a1a);
+          mountRef.current.appendChild(renderer.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0x1c2526, 0.5);
-        scene.add(ambientLight);
-        const lightningLight = new THREE.PointLight(0xffffff, 0, 500);
-        lightningLight.position.set(0, 200, 100);
-        scene.add(lightningLight);
+          const ambientLight = new THREE.AmbientLight(0x1c2526, 0.5);
+          scene.add(ambientLight);
+          const lightningLight = new THREE.PointLight(0xffffff, 0, 500);
+          lightningLight.position.set(0, 200, 100);
+          scene.add(lightningLight);
 
-        scene.fog = new THREE.FogExp2(0x1a1a1a, 0.001);
+          scene.fog = new THREE.FogExp2(0x1a1a1a, 0.001);
 
-        // Clouds
-        const cloudCanvas = document.createElement('canvas');
-        cloudCanvas.width = 32;
-        cloudCanvas.height = 32;
-        const cloudCtx = cloudCanvas.getContext('2d');
-        const cloudGradient = cloudCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
-        cloudGradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
-        cloudGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        cloudCtx.fillStyle = cloudGradient;
-        cloudCtx.beginPath();
-        cloudCtx.arc(16, 16, 16, 0, Math.PI * 2);
-        cloudCtx.fill();
-        const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
-        const cloudMaterial = new THREE.SpriteMaterial({ map: cloudTexture, transparent: true, opacity: 0.4 });
-        const clouds = [];
-        for (let i = 0; i < 8; i++) {
-          const cloud = new THREE.Sprite(cloudMaterial);
-          const scale = Math.random() * 50 + 25;
-          cloud.scale.set(scale, scale * 0.6, 1);
-          cloud.position.set(Math.random() * 800 - 400, Math.random() * 200 + 50, Math.random() * 800 - 400);
-          clouds.push(cloud);
-          scene.add(cloud);
-        }
-
-        // Moon
-        const moonCanvas = document.createElement('canvas');
-        moonCanvas.width = 32;
-        moonCanvas.height = 32;
-        const moonCtx = moonCanvas.getContext('2d');
-        const moonGradient = moonCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
-        moonGradient.addColorStop(0, 'rgba(220, 220, 255, 1)');
-        moonGradient.addColorStop(1, 'rgba(100, 100, 255, 0)');
-        moonCtx.fillStyle = moonGradient;
-        moonCtx.beginPath();
-        moonCtx.arc(16, 16, 14, 0, Math.PI * 2);
-        moonCtx.fill();
-        const moonTexture = new THREE.CanvasTexture(moonCanvas);
-        const moonMaterial = new THREE.SpriteMaterial({ map: moonTexture, transparent: true });
-        const moon = new THREE.Sprite(moonMaterial);
-        moon.scale.set(40, 40, 1);
-        moon.position.set(-200, 150, -300);
-        scene.add(moon);
-
-        // Rain
-        const rainCount = 2000;
-        const rainGeometry = new THREE.BufferGeometry();
-        const rainPositions = new Float32Array(rainCount * 6);
-        for (let i = 0; i < rainCount; i++) {
-          const x = Math.random() * 800 - 400;
-          const y = Math.random() * 400 + 50;
-          const z = Math.random() * 800 - 400;
-          rainPositions[i * 6] = x;
-          rainPositions[i * 6 + 1] = y;
-          rainPositions[i * 6 + 2] = z;
-          rainPositions[i * 6 + 3] = x;
-          rainPositions[i * 6 + 4] = y - 2;
-          rainPositions[i * 6 + 5] = z;
-        }
-        rainGeometry.setAttribute('position', new THREE.BufferAttribute(rainPositions, 3));
-        const rainMaterial = new THREE.LineBasicMaterial({ color: 0x99aabb, transparent: true, opacity: 0.3 });
-        const rain = new THREE.LineSegments(rainGeometry, rainMaterial);
-        scene.add(rain);
-
-        camera.position.set(0, 100, 400);
-        camera.lookAt(0, 100, 0);
-
-        let nextLightning = Date.now() + Math.random() * 1500 + 500;
-        const bolts = [];
-
-        function triggerLightning() {
-          const intensity = Math.random() * 80 + 40;
-          const duration = Math.random() * 200 + 100;
-          lightningLight.intensity = intensity;
-          moon.material.opacity = 0.7;
-          const geom = new THREE.BufferGeometry();
-          const startX = Math.random() * 160 - 80;
-          const startZ = Math.random() * 160 - 80;
-          const points = [new THREE.Vector3(startX, 200, startZ)];
-          for (let j = 1; j <= 10; j++) {
-            const t = j / 10;
-            points.push(new THREE.Vector3(
-              startX + (Math.random() - 0.5) * 50,
-              200 - t * 150,
-              startZ + (Math.random() - 0.5) * 50
-            ));
+          const cloudCanvas = document.createElement('canvas');
+          cloudCanvas.width = 32;
+          cloudCanvas.height = 32;
+          const cloudCtx = cloudCanvas.getContext('2d');
+          const cloudGradient = cloudCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+          cloudGradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
+          cloudGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          cloudCtx.fillStyle = cloudGradient;
+          cloudCtx.beginPath();
+          cloudCtx.arc(16, 16, 16, 0, Math.PI * 2);
+          cloudCtx.fill();
+          const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
+          const cloudMaterial = new THREE.SpriteMaterial({ map: cloudTexture, transparent: true, opacity: 0.4 });
+          const clouds = [];
+          for (let i = 0; i < 8; i++) {
+            const cloud = new THREE.Sprite(cloudMaterial);
+            const scale = Math.random() * 50 + 25;
+            cloud.scale.set(scale, scale * 0.6, 1);
+            cloud.position.set(Math.random() * 800 - 400, Math.random() * 200 + 50, Math.random() * 800 - 400);
+            clouds.push(cloud);
+            scene.add(cloud);
           }
-          geom.setFromPoints(points);
-          const mat = new THREE.LineBasicMaterial({ color: 0xe6e6ff, transparent: true, opacity: 1, linewidth: 2 });
-          const bolt = new THREE.Line(geom, mat);
-          scene.add(bolt);
-          bolts.push({ bolt, fade: Date.now() + duration });
-          setTimeout(() => {
-            lightningLight.intensity = 0;
-            moon.material.opacity = 1;
-          }, duration);
-        }
 
-        function animate() {
-          requestAnimationFrame(animate);
-          camera.position.z -= 0.3;
-          camera.lookAt(0, 100, camera.position.z - 50);
-          clouds.forEach(c => {
-            c.position.x += 0.1;
-            if (c.position.x > 400) c.position.x = -400;
-          });
+          const moonCanvas = document.createElement('canvas');
+          moonCanvas.width = 32;
+          moonCanvas.height = 32;
+          const moonCtx = moonCanvas.getContext('2d');
+          const moonGradient = moonCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+          moonGradient.addColorStop(0, 'rgba(220, 220, 255, 1)');
+          moonGradient.addColorStop(1, 'rgba(100, 100, 255, 0)');
+          moonCtx.fillStyle = moonGradient;
+          moonCtx.beginPath();
+          moonCtx.arc(16, 16, 14, 0, Math.PI * 2);
+          moonCtx.fill();
+          const moonTexture = new THREE.CanvasTexture(moonCanvas);
+          const moonMaterial = new THREE.SpriteMaterial({ map: moonTexture, transparent: true });
+          const moon = new THREE.Sprite(moonMaterial);
+          moon.scale.set(40, 40, 1);
+          moon.position.set(-200, 150, -300);
+          scene.add(moon);
+
+          const rainCount = 2000;
+          const rainGeometry = new THREE.BufferGeometry();
+          const rainPositions = new Float32Array(rainCount * 6);
           for (let i = 0; i < rainCount; i++) {
-            rainPositions[i * 6 + 1] -= 10 * 0.01;
-            rainPositions[i * 6 + 4] -= 10 * 0.01;
-            if (rainPositions[i * 6 + 1] < 50) {
-              rainPositions[i * 6 + 1] = 400;
-              rainPositions[i * 6 + 4] = 398;
-            }
+            const x = Math.random() * 800 - 400;
+            const y = Math.random() * 400 + 50;
+            const z = Math.random() * 800 - 400;
+            rainPositions[i * 6] = x;
+            rainPositions[i * 6 + 1] = y;
+            rainPositions[i * 6 + 2] = z;
+            rainPositions[i * 6 + 3] = x;
+            rainPositions[i * 6 + 4] = y - 2;
+            rainPositions[i * 6 + 5] = z;
           }
-          rainGeometry.attributes.position.needsUpdate = true;
-          bolts.forEach((b, i) => {
-            if (Date.now() > b.fade) {
-              b.bolt.material.opacity -= 0.05;
-              if (b.bolt.material.opacity <= 0) {
-                scene.remove(b.bolt);
-                bolts.splice(i, 1);
+          rainGeometry.setAttribute('position', new THREE.BufferAttribute(rainPositions, 3));
+          const rainMaterial = new THREE.LineBasicMaterial({ color: 0x99aabb, transparent: true, opacity: 0.3 });
+          const rain = new THREE.LineSegments(rainGeometry, rainMaterial);
+          scene.add(rain);
+
+          camera.position.set(0, 100, 400);
+          camera.lookAt(0, 100, 0);
+
+          let nextLightning = Date.now() + Math.random() * 1500 + 500;
+          const bolts = [];
+
+          function triggerLightning() {
+            const intensity = Math.random() * 80 + 40;
+            const duration = Math.random() * 200 + 100;
+            lightningLight.intensity = intensity;
+            moon.material.opacity = 0.7;
+            const geom = new THREE.BufferGeometry();
+            const startX = Math.random() * 160 - 80;
+            const startZ = Math.random() * 160 - 80;
+            const points = [new THREE.Vector3(startX, 200, startZ)];
+            for (let j = 1; j <= 10; j++) {
+              const t = j / 10;
+              points.push(new THREE.Vector3(
+                startX + (Math.random() - 0.5) * 50,
+                200 - t * 150,
+                startZ + (Math.random() - 0.5) * 50
+              ));
+            }
+            geom.setFromPoints(points);
+            const mat = new THREE.LineBasicMaterial({ color: 0xe6e6ff, transparent: true, opacity: 1, linewidth: 2 });
+            const bolt = new THREE.Line(geom, mat);
+            scene.add(bolt);
+            bolts.push({ bolt, fade: Date.now() + duration });
+            setTimeout(() => {
+              lightningLight.intensity = 0;
+              moon.material.opacity = 1;
+            }, duration);
+          }
+
+          function animate() {
+            requestAnimationFrame(animate);
+            camera.position.z -= 0.3;
+            camera.lookAt(0, 100, camera.position.z - 50);
+            clouds.forEach(c => {
+              c.position.x += 0.1;
+              if (c.position.x > 400) c.position.x = -400;
+            });
+            for (let i = 0; i < rainCount; i++) {
+              rainPositions[i * 6 + 1] -= 10 * 0.01;
+              rainPositions[i * 6 + 4] -= 10 * 0.01;
+              if (rainPositions[i * 6 + 1] < 50) {
+                rainPositions[i * 6 + 1] = 400;
+                rainPositions[i * 6 + 4] = 398;
               }
             }
-          });
-          if (Date.now() > nextLightning) {
-            triggerLightning();
-            nextLightning = Date.now() + Math.random() * 1500 + 500;
-          }
-          renderer.render(scene, camera);
-        }
-        animate();
-
-        let resizeTimeout;
-        const handleResize = () => {
-          clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(() => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-          }, 100);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
-      return <div ref={mountRef} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh' }} />;
-    };
-
-    const App = () => {
-      const [activeText, setActiveText] = useState(null);
-      const [showButton, setShowButton] = useState(false);
-      const [showScrollInfo, setShowScrollInfo] = useState(false);
-
-      useEffect(() => {
-        if (activeText === 'Faster') {
-          const timeout = setTimeout(() => setShowScrollInfo(true), 2000);
-          document.getElementById('second-section').classList.add('visible');
-          return () => clearTimeout(timeout);
-        }
-      }, [activeText]);
-
-      useEffect(() => {
-        const seq = [
-          { text: 'Meet', start: 1000, duration: 1000 },
-          { text: 'With', start: 2500, duration: 1000 },
-          { text: 'Faster', start: 4000, duration: 1000 }
-        ];
-        const timers = seq.map(({ text, start, duration }) =>
-          setTimeout(() => {
-            setActiveText(text);
-            if (text === 'Faster') {
-              setShowButton(true);
-              const flash = document.getElementById('flashOverlay');
-              flash.style.opacity = 1;
-              setTimeout(() => flash.style.opacity = 0, 200);
-            } else {
-              setTimeout(() => setActiveText(null), duration);
+            rainGeometry.attributes.position.needsUpdate = true;
+            bolts.forEach((b, i) => {
+              if (Date.now() > b.fade) {
+                b.bolt.material.opacity -= 0.05;
+                if (b.bolt.material.opacity <= 0) {
+                  scene.remove(b.bolt);
+                  bolts.splice(i, 1);
+                }
+              }
+            });
+            if (Date.now() > nextLightning) {
+              triggerLightning();
+              nextLightning = Date.now() + Math.random() * 1500 + 500;
             }
-          }, start)
+            renderer.render(scene, camera);
+          }
+          animate();
+
+          let resizeTimeout;
+          const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+              renderer.setSize(window.innerWidth, window.innerHeight);
+              camera.aspect = window.innerWidth / window.innerHeight;
+              camera.updateProjectionMatrix();
+            }, 100);
+          };
+          window.addEventListener('resize', handleResize);
+          return () => window.removeEventListener('resize', handleResize);
+        }, []);
+        return <div ref={mountRef} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh' }} />;
+      };
+
+      const App = () => {
+        const [activeText, setActiveText] = useState(null);
+        const [showButton, setShowButton] = useState(false);
+        const [showScrollInfo, setShowScrollInfo] = useState(false);
+
+        useEffect(() => {
+          if (activeText === 'Faster') {
+            const timeout = setTimeout(() => setShowScrollInfo(true), 2000);
+            document.getElementById('second-section').classList.add('visible');
+            return () => clearTimeout(timeout);
+          }
+        }, [activeText]);
+
+        useEffect(() => {
+          const seq = [
+            { text: 'Meet', start: 1000, duration: 1000 },
+            { text: 'With', start: 2500, duration: 1000 },
+            { text: 'Faster', start: 4000, duration: 1000 }
+          ];
+          const timers = seq.map(({ text, start, duration }) =>
+            setTimeout(() => {
+              setActiveText(text);
+              if (text === 'Faster') {
+                setShowButton(true);
+                const flash = document.getElementById('flashOverlay');
+                flash.style.opacity = 1;
+                setTimeout(() => flash.style.opacity = 0, 200);
+              } else {
+                setTimeout(() => setActiveText(null), duration);
+              }
+            }, start)
+          );
+          return () => timers.forEach(t => clearTimeout(t));
+        }, []);
+
+        return (
+          <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
+            <ThunderstormBackground />
+            <div id="flashOverlay"></div>
+            {['Meet', 'With', 'Faster'].map(text => {
+              const isActive = activeText === text;
+              let cls = `neon-text ${text.toLowerCase()} ${isActive ? 'active' : ''}`;
+              if (text === 'Faster' && showButton) cls += ' permanent';
+              return <div key={text} className={cls}>{text}</div>;
+            })}
+            {showButton && (
+              <button className="scroll-button" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>↓</button>
+            )}
+            {showScrollInfo && <div class="scroll-info">Scroll down for the real fun</div>}
+          </div>
         );
-        return () => timers.forEach(t => clearTimeout(t));
-      }, []);
+      };
 
-      return (
-        <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-          <ThunderstormBackground />
-          <div id="flashOverlay"></div>
-          {['Meet', 'With', 'Faster'].map(text => {
-            const isActive = activeText === text;
-            let cls = `neon-text ${text.toLowerCase()} ${isActive ? 'active' : ''}`;
-            if (text === 'Faster' && showButton) cls += ' permanent';
-            return <div key={text} className={cls}>{text}</div>;
-          })}
-          {showButton && (
-            <button className="scroll-button" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>↓</button>
-          )}
-          {showScrollInfo && <div className="scroll-info">Scroll down for the real fun</div>}
-        </div>
-      );
-    };
-
-    const root = createRoot(document.getElementById('root'));
-    root.render(<App />);
+      const root = createRoot(document.getElementById('root'));
+      root.render(<App />);
+    }
   </script>
 </body>
 </html>
